@@ -6,6 +6,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+python-dotenv = "*"
+picamera = "*"
+face-recognition = "*"
 
 [requires]
 python_version = "3.7"
