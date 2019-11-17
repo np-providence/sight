@@ -21,16 +21,14 @@ if __name__ == "__main__":
 
         process_frame = not process_frame
 
-        if not IS_PI:
-            frame = frame[:, :, ::-1]
-
-        # Draw window
+        # Invert to BGR before drawing
+        frame = frame[:, :, ::-1]
+        # Draw face boxes 
         for (top, right, bottom, left) in face_locations:
             cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 1)
-
+        # Draw image 
         cv2.imshow('Video', frame)
 
-        # Hit 'q' on the keyboard to quit!
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 

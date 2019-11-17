@@ -9,3 +9,4 @@ verify_ssl = true
 python-dotenv = "*"
 face-recognition = "*"
 opencv-python = "*"
+requests = "*"
