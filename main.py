@@ -1,13 +1,10 @@
-from uuid import getnode as get_mac
-from picamera import PiCamera 
-from time import sleep
-from io import BytesIO
+from capture.opencv import capture as opencv_capture 
+
+opencv_capture_runtime = opencv_capture()
 
 if __name__ == "__main__":
-    # Create an in-memory stream
-    my_stream = BytesIO()
-    camera = PiCamera()
-    camera.start_preview()
-    # Camera warm-up time
-    sleep(2)
-    camera.capture(my_stream, 'jpeg')
+    process_frame = True
+    while True:
+        if process_frame:
+            print(next(opencv_capture_runtime))
+        process_frame = not process_frame

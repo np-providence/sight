@@ -7,8 +7,5 @@ verify_ssl = true
 
 [packages]
 python-dotenv = "*"
-picamera = "*"
 face-recognition = "*"
-
-[requires]
-python_version = "3.7"
+opencv-python = "*"
