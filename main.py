@@ -1,7 +1,10 @@
 from capture.opencv import capture as opencv_capture 
 from capture.picamera import capture as picamera_capture 
+from dotenv import load_dotenv
 import face_recognition
 import cv2
+
+load_dotenv(verbose=True)
 
 IS_PI = False
 capture_runtime = picamera_capture() if IS_PI else opencv_capture()
