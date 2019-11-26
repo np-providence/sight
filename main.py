@@ -1,5 +1,6 @@
 from capture.opencv import capture as opencv_capture 
 from capture.picamera import capture as picamera_capture 
+from services.brian import identify
 from dotenv import load_dotenv
 import face_recognition
 import cv2
@@ -12,6 +13,10 @@ IS_PI = os.getenv("IS_PI") == "True"
 capture_runtime = picamera_capture() if IS_PI else opencv_capture()
 
 if __name__ == "__main__":
+    # Enrolment endpoint
+
+
+    # Face search
     process_frame = True
     face_locations = []
 
@@ -23,7 +28,8 @@ if __name__ == "__main__":
             face_locations = face_recognition.face_locations(frame)
             # Get their encodings
             face_encodings = face_recognition.face_encodings(frame, face_locations)
-            print(face_encodings)
+            identify(face_encodings)
+
 
         process_frame = not process_frame
 
