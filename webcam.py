@@ -4,7 +4,6 @@ import face_recognition
 import cv2
 import os
 
-
 capture_runtime = opencv_capture()
 
 if __name__ == "__main__":
@@ -20,6 +19,8 @@ if __name__ == "__main__":
             # Get their encodings
             face_encodings = face_recognition.face_encodings(frame, face_locations)
             print(face_encodings)
+            if len(face_encodings) > 0:
+                identify(face_encodings)
 
         process_frame = not process_frame
 

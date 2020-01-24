@@ -1,15 +1,18 @@
 import os
 from dotenv import load_dotenv
 import requests
+import json
 
 load_dotenv()
 brian_url = os.getenv("BRIAN_URL")
 print(brian_url)
 
 def identify(face_encodings):
-    r = requests.post(brian_url + "/identify", data = {
-                "face": [face_encoding for face_encoding in face_encodings]
+    headers = {
+                'content-type': 'application/json',
+                'method': 'POST'
             }
-        )
-    print(r.text)
+    payload = {'faces': [face_encoding.tolist() for face_encoding in face_encodings]}
+    r = requests.post(brian_url + "/api/identify", data=json.dumps(payload), headers=headers)
+    print(r)
 
