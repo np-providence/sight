@@ -14,5 +14,7 @@ def identify(face_encodings):
             }
     payload = {'faces': [face_encoding.tolist() for face_encoding in face_encodings]}
     r = requests.post(brian_url + "/api/identify", data=json.dumps(payload), headers=headers)
-    print(r)
+    faces = json.loads(r.text)['faces']
+    print(faces)
+    return faces
 
