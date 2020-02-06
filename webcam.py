@@ -1,5 +1,5 @@
 from capture.opencv import capture as opencv_capture 
-from services.brian import identify
+from services.brian import identify, get_locations
 import face_recognition
 import cv2
 import os
@@ -7,6 +7,18 @@ import os
 capture_runtime = opencv_capture()
 
 if __name__ == "__main__":
+    locations = get_locations()
+
+    print('Locations:')
+    index = 0
+    for location in locations:
+        print('[{}] - {}'.format(index, location['name']))
+        index += 1
+
+    selected_location_index = int(input('Select location of camera: '))
+
+    location = locations[selected_location_index]
+
     process_frame = True
     face_locations = []
     face_names = []
@@ -20,7 +32,7 @@ if __name__ == "__main__":
             # Get their encodings
             face_encodings = face_recognition.face_encodings(frame, face_locations)
             if len(face_encodings) > 0:
-                face_names = identify(face_encodings)
+                face_names = identify(face_encodings, location)
 
         process_frame = not process_frame
 
