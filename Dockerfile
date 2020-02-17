@@ -1,8 +1,7 @@
-FROM python:3
+FROM python:3.6-slim-stretch
 
-RUN sudo apt-get update
-RUN sudo apt-get upgrade
-RUN sudo apt-get install build-essential \
+RUN apt-get -y update && apt-get install -y --fix-missing \
+    build-essential \
     cmake \
     gfortran \
     git \
@@ -13,7 +12,6 @@ RUN sudo apt-get install build-essential \
     libatlas-dev \
     libavcodec-dev \
     libavformat-dev \
-    libboost-all-dev \
     libgtk2.0-dev \
     libjpeg-dev \
     liblapack-dev \
@@ -21,11 +19,21 @@ RUN sudo apt-get install build-essential \
     pkg-config \
     python3-dev \
     python3-numpy \
-    python3-pip \
-    zip
-RUN sudo apt-get clean
+    python-dev \
+    libpq-dev \
+    software-properties-common \
+    zip \
+    && apt-get clean && rm -rf /tmp/* /var/tmp/*
 
-RUN pip install poetry
+RUN cd ~ && \
+    mkdir -p dlib && \
+    git clone -b 'v19.9' --single-branch https://github.com/davisking/dlib.git dlib/ && \
+    cd  dlib/ && \
+    python3 setup.py install --yes USE_AVX_INSTRUCTIONS
+RUN pip install 'poetry==1.0.0a0'
+
+WORKDIR ./
+COPY pyproject.toml /
+RUN poetry export -f requirements.txt > requirements.txt
+RUN pip install -r requirements.txt
 COPY ./ ./
-RUN poetry install
-CMD poetry run python3 main.py
