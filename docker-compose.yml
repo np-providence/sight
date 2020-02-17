@@ -1,0 +1,6 @@
+version: '3'
+services:
+  sight_service:
+    build: .
+    container_name: sight_service
+    command: python ./webcam.py
